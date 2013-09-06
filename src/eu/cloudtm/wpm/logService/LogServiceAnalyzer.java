@@ -1315,9 +1315,9 @@ public class LogServiceAnalyzer implements Runnable{
 					
 					
 					offset = ClusterWidePublishAttributeIndexGenerator.getInstance().getId(pa.getName(), resType);
-					result[offset] = pa;
-					
-					
+					if(offset < size){
+						result[offset] = pa;
+					}
 					
 				}
 				
