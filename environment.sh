@@ -7,6 +7,8 @@ for jar in `ls ${ENV_WORKING_DIR}/lib/*.jar`; do
     CLASSPATH="${CLASSPATH}:${jar}"
 done
 
+CLASSPATH=${CLASSPATH}:wpm.jar
+
 EXEC_MAIN=eu.cloudtm.wpm.main.Main
 D_VARS="-Djava.net.preferIPv4Stack=true"
 

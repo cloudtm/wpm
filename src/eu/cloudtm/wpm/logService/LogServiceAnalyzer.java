@@ -101,6 +101,7 @@ public class LogServiceAnalyzer implements Runnable{
 	
 	private HashMap<String, Aggregation> aggregationTypes;
 
+	private boolean waitForFenixProbe = true;
 	
 	public LogServiceAnalyzer() throws RemoteException{
 		loadParametersFromRegistry();
@@ -354,7 +355,7 @@ public class LogServiceAnalyzer implements Runnable{
 				            		PublishStatsEventInternal statsToPublish = null;
 
 				            		if(this.csvFileStaticLocalSubscription != null){
-				            			statsToPublish = this.csvFileStaticLocalSubscription.computePublishStatsEventInternal();
+				            			statsToPublish = this.csvFileStaticLocalSubscription.computePublishStatsEventInternal(waitForFenixProbe);
 				            		}
 
 				            		// produce CSV here. This method returns the aggregated stats if any.
@@ -369,7 +370,7 @@ public class LogServiceAnalyzer implements Runnable{
                                     List<PublishStatsEventInternal> toPublish = new ArrayList<PublishStatsEventInternal>(size);
 
                                     while (itr.hasNext()) {
-                                        PublishStatsEventInternal publishStatsEventInternal = itr.next().computePublishStatsEventInternal();
+                                        PublishStatsEventInternal publishStatsEventInternal = itr.next().computePublishStatsEventInternal(waitForFenixProbe);
 
                                         if (publishStatsEventInternal != null) {
                                             toPublish.add(publishStatsEventInternal);
@@ -1783,6 +1784,7 @@ public class LogServiceAnalyzer implements Runnable{
 		timeout = Long.parseLong(props.getProperty("AnalyzerThreadTimeout"));
 		enableInfinispan = Boolean.parseBoolean(props.getProperty("enableInfinispan"));
 		enableListeners = Boolean.parseBoolean(props.getProperty("enableListeners"));
+		waitForFenixProbe = Boolean.parseBoolean(props.getProperty("waitForFenixProbe"));
 		
 		String rmiPortNumber = props.getProperty("RMIPort_number");
 		if(rmiPortNumber != null){

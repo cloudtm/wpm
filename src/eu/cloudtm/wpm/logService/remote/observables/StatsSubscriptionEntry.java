@@ -120,9 +120,11 @@ public class StatsSubscriptionEntry {
 	}
 	
 	
-	public PublishStatsEventInternal computePublishStatsEventInternal(){
+	public PublishStatsEventInternal computePublishStatsEventInternal(boolean waitForFenixProbe){
 		
 		int numResourceTypes = ResourceType.values().length;
+		
+		int indexFenix = ResourceType.FENIX.ordinal();
 		
 		boolean allReady = true;
 		boolean oneVMReady;
@@ -136,6 +138,10 @@ public class StatsSubscriptionEntry {
 			oneVMReady = true;
 			
 			for(int j=0; j<numResourceTypes; j++){
+				
+				if(j == indexFenix && !waitForFenixProbe){
+					continue;
+				}
 				
 				currentIndex = (i*numResourceTypes)+j;
 				
@@ -159,6 +165,10 @@ public class StatsSubscriptionEntry {
 				
 				
 				for(int j=0; j<numResourceTypes; j++){
+					
+					if(j == indexFenix && !waitForFenixProbe){
+						continue;
+					}
 					
 					currentIndex = (i*numResourceTypes)+j;
 					
@@ -193,6 +203,10 @@ public class StatsSubscriptionEntry {
 			
 				
 				for(int j=0; j<numResourceTypes; j++){
+					
+					if(j == indexFenix && !waitForFenixProbe){
+						continue;
+					}
 					
 					currentIndex = (i*numResourceTypes)+j;
 					
